@@ -20,6 +20,6 @@ set -o errexit
 # echo "Building armv7.."
 # docker run --rm -e GOARM=7 -v "$(pwd):/balena" balena-build-arm /bin/sh build.sh
 # 
-echo "Building aarch64.."
-docker build -f Dockerfile.build.aarch64 -t balena-build-aarch64 .
-docker run --rm -v "$(pwd):/balena" balena-build-aarch64 /bin/sh build.sh
+echo "Building arm.."
+docker build -f Dockerfile.build.arm -t balena-build-arm .
+docker run --rm -v "$(pwd):/balena" balena-build-arm /bin/sh build.sh
