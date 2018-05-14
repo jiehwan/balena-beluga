@@ -19,9 +19,11 @@ esac
 
 version=$(git describe --tags --always)
 
-AUTO_GOPATH=1 ./hack/make.sh dynbinary-balena
+AUTO_GOPATH=1 \
+DOCKER_BUILDTAGS='exclude_graphdriver_btrfs exclude_graphdriver_devicemapper' \
+./hack/make.sh binary-balena
 
-src="bundles/latest/dynbinary-balena"
+src="bundles/latest/binary-balena"
 dst="balena"
 
 rm -rf "$dst"
