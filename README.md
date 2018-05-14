@@ -1,48 +1,101 @@
-Balena: Moby-based container engine for IoT
-===========================================
+```
+$ ./build.sh 
+# WARNING! I don't seem to be running in a Docker container.
+# The result of this command might be an incorrect build, and will not be
+# officially supported.
+#
+# Try this instead: make all
+#
 
-<img src="docs/static_files/balena-logo-black.svg" alt="Balena" width="50%" />
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# GITCOMMIT = 73136d1-unsupported
+# The version you are building is listed as unsupported because
+# there are some files in the git repository that are in an uncommitted state.
+# Commit these changes, or add to .gitignore to remove the -unsupported from the version.
+# Here is the current list:
+ M build-allarch.sh
+ M build.sh
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+bundles/17.06.0-dev already exists. Removing.
 
-## Overview
+---> Making bundle: binary-balena (in bundles/17.06.0-dev/binary-balena)
+Building: bundles/17.06.0-dev/binary-balena/balena-17.06.0-dev
+Created binary: bundles/17.06.0-dev/binary-balena/balena-17.06.0-dev
 
-Balena is a new container engine purpose-built for embedded and IoT use cases
-and compatible with Docker containers. Based on Docker’s Moby Project, balena
-supports container deltas for 10-70x more efficient bandwidth usage, has 3x
-smaller binaries, uses RAM and storage more conservatively, and focuses on
-atomicity and durability of container pulling.
+balena/
+balena/balena-containerd-ctr
+balena/balena
+balena/balena-containerd-shim
+balena/balena-proxy
+balena/balena-containerd
+balena/balena-runc
+balena/balenad
+```
 
-## Features
+```
+$ ./build-allarch.sh
+Building arm..
+Sending build context to Docker daemon    171MB
+Step 1/6 : FROM resin/raspberrypi3-golang:1.9
+ ---> b448eda7059e
+Step 2/6 : ENTRYPOINT [ "qemu-arm-static", "-execve" ]
+ ---> Using cache
+ ---> 19c57fa19e4b
+Step 3/6 : SHELL      [ "qemu-arm-static", "-execve", "/bin/sh", "-c" ]
+ ---> Using cache
+ ---> d48295a73aef
+Step 4/6 : RUN apt-get update 	&& apt-get install -y 		btrfs-tools 	libapparmor-dev 		libdevmapper-dev 		libnl-3-dev 		libsystemd-dev 		libsystemd-journal-dev
+ ---> Running in f54f6a3b40f9
+Err http://security.debian.org jessie/updates InRelease
+  
+Err http://archive.raspbian.org jessie InRelease
+  
+Err http://deb.debian.org jessie InRelease
+  
+Err http://archive.raspberrypi.org jessie InRelease
+  
+Err http://deb.debian.org jessie-updates InRelease
+  
+Err http://security.debian.org jessie/updates Release.gpg
+  Temporary failure resolving 'security.debian.org'
+Err http://archive.raspbian.org jessie Release.gpg
+  Temporary failure resolving 'archive.raspbian.org'
+Err http://archive.raspberrypi.org jessie Release.gpg
+  Temporary failure resolving 'archive.raspberrypi.org'
+Err http://deb.debian.org jessie Release.gpg
+  Temporary failure resolving 'deb.debian.org'
+Err http://deb.debian.org jessie-updates Release.gpg
+  Temporary failure resolving 'deb.debian.org'
+Reading package lists...
+W: Failed to fetch http://deb.debian.org/debian/dists/jessie/InRelease  
 
-- __Small footprint__
-	- 3.5x smaller than Docker CE, packaged as a single binary
-- __Multi-arch support__
-	- Available for a wide variety of chipset architectures, supporting everything from tiny IoT devices to large industrial gateways
-- __True container deltas__
-	- Bandwidth-efficient updates with binary diffs, 10-70x smaller than pulling layers
-- __Minimal wear-and-tear__
-	- Extract layers as they arrive to prevent excessive writing to disk, protecting your storage from eventual corruption
-- __Failure-resistant pulls__
-	- Atomic and durable image pulls defend against partial container pulls in the event of power failure
-- __Conservative memory use__
-	- Prevents page cache thrashing during image pull, so your application runs undisturbed in low-memory situations
+W: Failed to fetch http://deb.debian.org/debian/dists/jessie-updates/InRelease  
 
-## Transitioning from Docker CE
+W: Failed to fetch http://security.debian.org/dists/jessie/updates/InRelease  
 
-We left out Docker features that we saw as most needed in cloud deployments and
-therefore not warranting inclusion in a lightweight IoT-focused container
-engine. Specifically, we’ve excluded:
+W: Failed to fetch http://archive.raspbian.org/raspbian/dists/jessie/InRelease  
 
-- Docker Swarm
-- Cloud logging drivers
-- Plugin support
-- Overlay networking drivers
-- Non-boltdb discovery backends (consul, zookeeper, etcd, etc.)
+W: Failed to fetch http://archive.raspberrypi.org/debian/dists/jessie/InRelease  
 
-Unless you depend on one of the features in Docker that balena omits, using
-balena should be a drop-in replacement
+W: Failed to fetch http://security.debian.org/dists/jessie/updates/Release.gpg  Temporary failure resolving 'security.debian.org'
 
-Licensing
-=========
-Balena is licensed under the Apache License, Version 2.0. See
-[LICENSE](https://github.com/resin-os/balena/blob/master/LICENSE) for the full
-license text.
+W: Failed to fetch http://archive.raspbian.org/raspbian/dists/jessie/Release.gpg  Temporary failure resolving 'archive.raspbian.org'
+
+W: Failed to fetch http://deb.debian.org/debian/dists/jessie/Release.gpg  Temporary failure resolving 'deb.debian.org'
+
+W: Failed to fetch http://archive.raspberrypi.org/debian/dists/jessie/Release.gpg  Temporary failure resolving 'archive.raspberrypi.org'
+
+W: Failed to fetch http://deb.debian.org/debian/dists/jessie-updates/Release.gpg  Temporary failure resolving 'deb.debian.org'
+
+W: Some index files failed to download. They have been ignored, or old ones used instead.
+Reading package lists...
+Building dependency tree...
+Reading state information...
+E: Unable to locate package btrfs-tools
+E: Unable to locate package libapparmor-dev
+E: Unable to locate package libdevmapper-dev
+E: Unable to locate package libnl-3-dev
+E: Unable to locate package libsystemd-dev
+E: Unable to locate package libsystemd-journal-dev
+The command 'qemu-arm-static -execve /bin/sh -c apt-get update 	&& apt-get install -y 		btrfs-tools 		libapparmor-dev 		libdevmapper-dev 		libnl-3-dev 		libsystemd-dev 		libsystemd-journal-dev' returned a non-zero code: 100
+```
