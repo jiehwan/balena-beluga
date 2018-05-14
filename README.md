@@ -20,12 +20,8 @@ balena/balena-proxy
 balena/balena-containerd
 balena/balena-runc
 balena/balenad
-jiehwan@leo:~/src/balena-static$ file balena
-balena/
-balena-17.06-rev1-1-g307ab98-x86_64.tar.gz
-jiehwan@leo:~/src/balena-static$ file balena
-balena/
-balena-17.06-rev1-1-g307ab98-x86_64.tar.gz
+
+
 /balena-static$ file balena/balena
 balena/balena: ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, for GNU/Linux 2.6.32, BuildID[sha1]=7232430f1b8490d29da63245ac68bf0ef4b02e25, stripped
 
