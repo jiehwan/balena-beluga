@@ -2,20 +2,7 @@
 
 set -o errexit
 
-case "$(go env GOARCH)" in
-	"arm")
-		arch="armv$(go env GOARM)"
-		;;
-	"arm64")
-		arch="aarch64"
-		;;
-	"386")
-		arch="i386"
-		;;
-	"amd64")
-		arch="x86_64"
-		;;
-esac
+arch="armv7"
 
 version=$(git describe --tags --always)
 
@@ -31,7 +18,7 @@ rm -rf "$dst"
 mkdir "$dst"
 
 cp -L "$src/balena" "$dst/balena"
-strip "$dst/balena"
+#strip --strip-program=arm-linux-gnueabi-strip "$dst/balena"
 
 ln -s balena "$dst/balenad"
 ln -s balena "$dst/balena-containerd"
